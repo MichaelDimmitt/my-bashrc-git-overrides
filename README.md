@@ -34,7 +34,6 @@ git() {
     fi
   elif [ "$1" == "checkout" ]; then
     branchOverride "git $*";
-  fi
   else
     $(which git) "$@"
   fi
