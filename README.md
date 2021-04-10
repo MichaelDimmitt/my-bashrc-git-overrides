@@ -15,3 +15,7 @@ git() {
   fi
 }
 ```
+Repos that built this project:
+https://github.com/MichaelDimmitt/git_check_computer
+https://github.com/MichaelDimmitt/git-hide-tracked-files
+https://github.com/MichaelDimmitt/git-main-master-override
