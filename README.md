@@ -7,19 +7,19 @@ https://github.com/MichaelDimmitt/git-main-master-override<br/>
 You too can improve your git command by adding this content to your ~/.bashrc or ~/.bashrc.local 🎉
 ```bash
 branchOverride() {
-    gitCommand="$*"
-    errormessage=$(echo "$gitCommand" | exec 2>&1)
-    checkBranch "$errormessage"
-}
-## posix compliant solution:
-checkBranch() {
-    result=$*
-    if [ -z "${result##*'master'*}" ] ;then
-        command git checkout main
-    elif [ -z "${result##*'main'*}" ] ;then
-        command git checkout master
+    projectBranch=$(git branch | grep -E 'master|main' | head -n 1 | sed 's/*//');
+
+    # what branch did user request?
+    substr1="master"
+    substr2="main"
+    string="$*"
+
+    if [ -z "${string##*$substr1*}" ] ;then
+        command git checkout $projectBranch
+    elif [ -z "${string##*$substr2*}" ] ;then
+        command git checkout $projectBranch
     else
-        echo "$result"
+        command git $*
     fi
 }
 git() {
@@ -33,7 +33,7 @@ git() {
       done < .hide_tracked
     fi
   elif [ "$1" == "checkout" ]; then
-    branchOverride "git $*";
+    branchOverride "$*";
   else
     $(which git) "$@"
   fi
